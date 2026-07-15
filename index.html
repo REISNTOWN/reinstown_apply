@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- الأكواد الخاصة بظهور وتنسيق شكل الرابط في الديسكورد (Discord Preview) -->
     <title>بوابة تقديمات سيرفر REISNTOWN</title>
+    <meta property="og:title" content="بوابة تقديمات سيرفر REISNTOWN الرسمية" />
+    <meta property="og:description" content="قدم الآن على إدارتك أو قطاعك المفضل داخل سيرفر REISNTOWN. نظام تقديمات حديث وسلس للجميع." />
+    <meta property="og:url" content="https://reinstown.github.io/reinstown_apply/" />
+    <meta property="og:image" content="https://i.imgur.com/AfFp7pu.png" /> <!-- هنا يمكنك وضع رابط شعار سيرفرك مستقبلاً ليظهر بالديسكورد -->
+    <meta name="theme-color" content="#ff3e3e"> <!-- لون الشريط الجانبي للمعاينة بالديسكورد -->
+
     <style>
         :root {
             --bg-color: #0f111a;
@@ -417,7 +425,6 @@
     };
 
     function updateProgress() {
-        // تحديث الدوائر والشريط الملون
         const circles = document.querySelectorAll('.circle');
         circles.forEach((circle, idx) => {
             if (idx < currentStep) {
@@ -430,14 +437,12 @@
         const progress = document.getElementById('progress');
         progress.style.width = ((currentStep - 1) / (totalSteps - 1)) * 100 + '%';
         
-        // تحديث العنوان الفرعي
         document.getElementById('step-subtitle').innerText = subtitles[currentStep];
     }
 
     function changeStep(n) {
         const steps = document.querySelectorAll('.form-step');
         
-        // التحقق من الحقول الإجبارية قبل الانتقال للخطوة التالية
         if (n === 1) {
             if (currentStep === 1) {
                 const fullName = document.getElementById('fullName').value;
@@ -458,22 +463,16 @@
             }
         }
 
-        // إخفاء الخطوة الحالية
         steps[currentStep - 1].classList.remove('active');
-        
-        // تغيير مؤشر الخطوة
         currentStep += n;
 
-        // عند الانتقال للخطوة الثالثة، نظهر أسئلة القطاع المحدد ونخفي الباقي
         if (currentStep === 3) {
             const dept = document.getElementById('dept').value;
             showQuestionsForSector(dept);
         }
 
-        // إظهار الخطوة الجديدة
         steps[currentStep - 1].classList.add('active');
 
-        // تحديث الأزرار
         if (currentStep === 1) {
             document.getElementById('prevBtn').style.display = 'none';
             document.getElementById('nextBtn').innerText = 'التالي';
@@ -492,29 +491,24 @@
     }
 
     function selectSector(sectorValue, cardElement) {
-        // إزالة التحديد من جميع الكروت السابقة
         document.querySelectorAll('.sector-card').forEach(card => {
             card.classList.remove('selected');
         });
 
-        // تحديد الكارت الحالي
         cardElement.classList.add('selected');
         document.getElementById('dept').value = sectorValue;
 
-        // الانتقال للخطوة التالية تلقائياً لتسهيل التقديم
         setTimeout(() => {
             changeStep(1);
         }, 300);
     }
 
     function showQuestionsForSector(dept) {
-        // إخفاء كافة الحقول الديناميكية أولاً
         const allSections = ['admin', 'police', 'ems', 'justice', 'mafia', 'new-gang'];
         allSections.forEach(sec => {
             document.getElementById(`${sec}-fields`).style.display = 'none';
         });
 
-        // إظهار القسم المطلوب فقط
         if (dept) {
             document.getElementById(`${dept}-fields`).style.display = 'block';
         }
@@ -599,7 +593,6 @@
                 alert("تم إرسال طلبك بنجاح! سيتم مراجعته من قبل المسؤولين.");
                 document.getElementById('appForm').reset();
                 
-                // إعادة التهيئة للصفحة الأولى
                 currentStep = 1;
                 document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
                 document.getElementById('step-1').classList.add('active');
